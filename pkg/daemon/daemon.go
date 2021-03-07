@@ -7,6 +7,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/thiago-scherrer/hall9000/internal/config"
 	"github.com/thiago-scherrer/hall9000/pkg/news"
+	"github.com/thiago-scherrer/hall9000/pkg/volume"
 )
 
 func Start() {
@@ -45,6 +46,8 @@ func Start() {
 				go news.Start(update.Message.CommandArguments())
 			case "stop":
 				os.Setenv("CONTROL", "true")
+			case "volume":
+				go volume.Start(update.Message.CommandArguments())
 			case "withArgument":
 				msg.Text = "You supplied the following argument: " + update.Message.CommandArguments()
 			case "html":
