@@ -1,7 +1,6 @@
 package daemon
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -35,13 +34,12 @@ func Start() {
 		if update.Message == nil {
 			continue
 		}
-
-		if update.Message.From.UserName != "thiago42" {
-			fmt.Println(update.Message.From.UserName)
-			break
+		if update.Message.From.UserName == "thiago42" || update.Message.From.UserName == "karinas" {
+			continue
 		}
 
 		if update.Message.IsCommand() {
+
 			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 			switch update.Message.Command() {
 			case "news":
