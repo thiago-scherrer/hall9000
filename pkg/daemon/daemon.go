@@ -28,9 +28,14 @@ func Start() {
 	if err != nil {
 		log.Panic(err)
 	}
+
 	for update := range updates {
 		if update.Message == nil {
 			continue
+		}
+
+		if update.Message.From.UserName != "thiago42" || update.Message.From.UserName != "karinas" {
+			break
 		}
 
 		if update.Message.IsCommand() {
