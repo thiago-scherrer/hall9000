@@ -1,6 +1,7 @@
 package daemon
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -36,6 +37,7 @@ func Start() {
 		}
 
 		if update.Message.From.UserName != "thiago42" || update.Message.From.UserName != "karinas" {
+			fmt.Println(update.Message.From.UserName)
 			break
 		}
 
