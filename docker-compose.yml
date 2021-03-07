@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  hall9000:
+    build:
+      context: .
+    environment:
+    - TGKEY=${TGKEY}
+    - DEBUG=${DEBUG}
+    - TIMEOUT=${TIMEOUT}
