@@ -36,7 +36,7 @@ func Start() {
 			continue
 		}
 
-		if update.Message.From.UserName != "thiago42" || update.Message.From.UserName != "karinas" {
+		if update.Message.From.UserName != "thiago42" {
 			fmt.Println(update.Message.From.UserName)
 			break
 		}
