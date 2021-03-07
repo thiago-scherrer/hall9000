@@ -3,6 +3,7 @@ package daemon
 import (
 	"log"
 	"os"
+	"reflect"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/thiago-scherrer/hall9000/internal/config"
@@ -34,8 +35,12 @@ func Start() {
 		if update.Message == nil {
 			continue
 		}
-		if update.Message.From.UserName == "thiago42" || update.Message.From.UserName == "karinas" {
-			continue
+		//fmt.Println(update.ChannelPost.From.UserName)
+
+		u := update.Message.From.UserName
+
+		if !reflect.DeepEqual(u, "thiago42") {
+			break
 		}
 
 		if update.Message.IsCommand() {
