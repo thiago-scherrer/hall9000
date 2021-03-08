@@ -116,6 +116,10 @@ func canalmeio() {
 
 	tokenizer := html.NewTokenizer(response.Body)
 	for {
+		if config.GetControl() {
+			break
+		}
+
 		tt := tokenizer.Next()
 		token := tokenizer.Token()
 
@@ -136,6 +140,10 @@ func canalmeio() {
 					enter = true
 					break
 				}
+				if config.GetControl() {
+					break
+				}
+
 			}
 		case html.TextToken:
 			if enter {
