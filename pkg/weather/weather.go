@@ -31,7 +31,7 @@ func Start() {
 func temp(apiKey string) {
 	w, err := owm.NewCurrent("C", "pt", apiKey)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	w.CurrentByID(3458611)
@@ -47,7 +47,7 @@ func prev(apiKey string) {
 	w, err := owm.NewForecast("5", "C", "pt", apiKey)
 	fmt.Println(apiKey)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	w.DailyByID(3458611, 1)
@@ -56,7 +56,7 @@ func prev(apiKey string) {
 
 	tmpl, err := template.New("forecast").Parse(forecastTemplate)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	var tpl bytes.Buffer
