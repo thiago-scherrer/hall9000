@@ -9,6 +9,7 @@ import (
 	"github.com/thiago-scherrer/hall9000/internal/config"
 	"github.com/thiago-scherrer/hall9000/pkg/news"
 	"github.com/thiago-scherrer/hall9000/pkg/volume"
+	"github.com/thiago-scherrer/hall9000/pkg/weather"
 )
 
 func Start() {
@@ -35,7 +36,6 @@ func Start() {
 		if update.Message == nil {
 			continue
 		}
-		//fmt.Println(update.ChannelPost.From.UserName)
 
 		u := update.Message.From.UserName
 
@@ -53,6 +53,8 @@ func Start() {
 				os.Setenv("CONTROL", "true")
 			case "volume":
 				go volume.Start(update.Message.CommandArguments())
+			case "clima":
+				go weather.Start()
 			case "withArgument":
 				msg.Text = "You supplied the following argument: " + update.Message.CommandArguments()
 			case "html":

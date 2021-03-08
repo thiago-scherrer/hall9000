@@ -32,6 +32,14 @@ func GetTimeOut() int {
 	return i
 }
 
+func GetClimaKey() string {
+	k := os.Getenv("CLIMAKEY")
+	if len(k) <= 0 {
+		return "42"
+	}
+	return k
+}
+
 func GetControl() bool {
 	control := os.Getenv("CONTROL")
 

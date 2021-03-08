@@ -8,3 +8,4 @@ services:
     - TGKEY=${TGKEY}
     - DEBUG=${DEBUG}
     - TIMEOUT=${TIMEOUT}
+    - CLIMAKEY=${CLIMAKEY}
