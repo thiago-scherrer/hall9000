@@ -3,11 +3,16 @@ package news
 import (
 	"context"
 	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"strings"
 	"time"
 
 	"github.com/mmcdole/gofeed"
 	"github.com/thiago-scherrer/hall9000/internal/config"
 	"github.com/thiago-scherrer/hall9000/internal/voice"
+	"golang.org/x/net/html"
 )
 
 func Start(font string) {
@@ -23,6 +28,8 @@ func Start(font string) {
 		go tec()
 	case "geral":
 		go geral()
+	case "meio":
+		go canalmeio()
 	default:
 		go geral()
 	}
@@ -88,5 +95,56 @@ func mundo() {
 		}
 		fmt.Println(it.Title)
 		voice.Start(it.Title)
+	}
+}
+
+func canalmeio() {
+	response, err := http.Get("https://www.canalmeio.com.br/ultima-edicao/")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer response.Body.Close()
+
+	textTags := []string{
+		"a",
+		"p", "span", "em", "string", "blockquote", "q", "cite",
+		"h1", "h2", "h3", "h4", "h5", "h6",
+	}
+
+	tag := ""
+	enter := false
+
+	tokenizer := html.NewTokenizer(response.Body)
+	for {
+		tt := tokenizer.Next()
+		token := tokenizer.Token()
+
+		err := tokenizer.Err()
+		if err == io.EOF {
+			break
+		}
+
+		switch tt {
+		case html.ErrorToken:
+			log.Fatal(err)
+		case html.StartTagToken, html.SelfClosingTagToken:
+			enter = false
+
+			tag = token.Data
+			for _, ttt := range textTags {
+				if tag == ttt {
+					enter = true
+					break
+				}
+			}
+		case html.TextToken:
+			if enter {
+				data := strings.TrimSpace(token.Data)
+
+				if len(data) > 0 {
+					voice.Start(data)
+				}
+			}
+		}
 	}
 }
