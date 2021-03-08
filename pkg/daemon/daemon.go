@@ -56,7 +56,7 @@ func Start() {
 			case "clima":
 				go weather.Start()
 			default:
-				msg.Text = "Comando validos: /news /stop /volume /clima"
+				msg.Text = "Comandos validos: /news /stop /volume /clima"
 			}
 			bot.Send(msg)
 		}
