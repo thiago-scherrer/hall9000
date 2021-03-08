@@ -55,13 +55,8 @@ func Start() {
 				go volume.Start(update.Message.CommandArguments())
 			case "clima":
 				go weather.Start()
-			case "withArgument":
-				msg.Text = "You supplied the following argument: " + update.Message.CommandArguments()
-			case "html":
-				msg.ParseMode = "html"
-				msg.Text = "This will be interpreted as HTML, click <a href=\"https://www.example.com\">here</a>"
 			default:
-				msg.Text = "I don't know that command"
+				msg.Text = "Comando validos: /news /stop /volume /clima"
 			}
 			bot.Send(msg)
 		}
