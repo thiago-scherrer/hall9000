@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 	"time"
 
@@ -101,7 +102,7 @@ func mundo() {
 func canalmeio() {
 	response, err := http.Get("https://www.canalmeio.com.br/ultima-edicao/")
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	defer response.Body.Close()
 
@@ -130,7 +131,7 @@ func canalmeio() {
 
 		switch tt {
 		case html.ErrorToken:
-			log.Fatal(err)
+			log.Println(err)
 		case html.StartTagToken, html.SelfClosingTagToken:
 			enter = false
 
@@ -148,8 +149,9 @@ func canalmeio() {
 		case html.TextToken:
 			if enter {
 				data := strings.TrimSpace(token.Data)
-
-				if len(data) > 0 {
+				myRegex, _ := regexp.Compile(`(O que é o Meio)|(No que acreditamos)|(Consultar edições passadas)|(Sobre o Meio)|(O mundo transformado pelo 5G)(Curadoria de vídeos)|(Conversas com o Meio)|(Ponto de Partida)|(Colunas do Tony)|(Edições Premium)|(Todas as Edições)|(Última edição)|(Edições)|(Curadoria de vídeos)|(O mundo transformado pelo 5G)|(Quem somos)|(Política de privacidade)|(Assinantes)|(Acessar Premium)|(Benefícios da assinatura premium)|(Assinar Premium)|(Pioneiros)|(Monitor)|(Acessar Monitor)|(Como funciona o Monitor)|(Painel das Bolhas)|(Ajuda)|(Não recebi minha edição)|(Como cancelo o recebimento do Meio\?)|(Dúvidas sobre assinatura premium)|(Outras perguntas)|(Fale conosco)|(Acessar Premium)`)
+				altered := myRegex.ReplaceAllString(data, "")
+				if len(altered) > 0 {
 					voice.Start(data)
 				}
 			}
