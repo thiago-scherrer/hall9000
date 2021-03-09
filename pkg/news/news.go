@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 	"time"
@@ -15,6 +17,8 @@ import (
 	"github.com/thiago-scherrer/hall9000/internal/voice"
 	"golang.org/x/net/html"
 )
+
+const mfile string = "/tmp/.meio"
 
 func Start(font string) {
 
@@ -104,7 +108,15 @@ func canalmeio() {
 	if err != nil {
 		log.Println(err)
 	}
+
 	defer response.Body.Close()
+
+	f, err := os.OpenFile(mfile, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0755)
+	if err != nil {
+		log.Println(err)
+	}
+
+	defer f.Close()
 
 	textTags := []string{
 		"a",
@@ -149,12 +161,29 @@ func canalmeio() {
 		case html.TextToken:
 			if enter {
 				data := strings.TrimSpace(token.Data)
-				myRegex, _ := regexp.Compile(`(O que é o Meio)|(No que acreditamos)|(Consultar edições passadas)|(Sobre o Meio)|(O mundo transformado pelo 5G)(Curadoria de vídeos)|(Conversas com o Meio)|(Ponto de Partida)|(Colunas do Tony)|(Edições Premium)|(Todas as Edições)|(Última edição)|(Edições)|(Curadoria de vídeos)|(O mundo transformado pelo 5G)|(Quem somos)|(Política de privacidade)|(Assinantes)|(Acessar Premium)|(Benefícios da assinatura premium)|(Assinar Premium)|(Pioneiros)|(Monitor)|(Acessar Monitor)|(Como funciona o Monitor)|(Painel das Bolhas)|(Ajuda)|(Não recebi minha edição)|(Como cancelo o recebimento do Meio\?)|(Dúvidas sobre assinatura premium)|(Outras perguntas)|(Fale conosco)|(Acessar Premium)`)
+				myRegex, _ := regexp.Compile(`(O que é o Meio)|(No que acreditamos)|(Consultar edições passadas)|(Sobre o Meio)|(O mundo transformado pelo 5G)(Curadoria de vídeos)|(Conversas com o Meio)|(Ponto de Partida)|(Colunas do Tony)|(Edições Premium)|(Todas as Edições)|(Última edição)|(Edições)|(Curadoria de vídeos)|(O mundo transformado pelo 5G)|(Quem somos)|(Política de privacidade)|(Assinantes)|(Acessar Premium)|(Benefícios da assinatura premium)|(Assinar Premium)|(Pioneiros)|(Monitor)|(Acessar Monitor)|(Como funciona o Monitor)|(Painel das Bolhas)|(Ajuda)|(Não recebi minha edição)|(Como cancelo o recebimento do Meio\?)|(Dúvidas sobre assinatura premium)|(Outras perguntas)|(Fale conosco)|(Acessar Premium)|(")`)
 				altered := myRegex.ReplaceAllString(data, "")
 				if len(altered) > 0 {
-					voice.Start(data)
+					w, err := f.WriteString(data)
+					fmt.Println("escrevendo:", data)
+					if err != nil {
+						log.Println(w, err)
+						break
+					}
 				}
 			}
 		}
+	}
+
+	content, err := ioutil.ReadFile(mfile)
+	if err != nil {
+		log.Println(err)
+	}
+
+	voice.Start(string(content))
+
+	w := os.Remove(mfile)
+	if w != nil {
+		log.Println(w)
 	}
 }
