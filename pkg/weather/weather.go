@@ -40,7 +40,9 @@ func temp(apiKey string) {
 	tempMax := fmt.Sprintf("%.2f", w.Main.TempMax)
 	tempMin := fmt.Sprintf("%.2f", w.Main.TempMin)
 
-	voice.Start("A temperatura agora é de " + temp + " graus, a mínima é de " + tempMin + " graus e a máxima é de " + tempMax + " graus.")
+	p := "A temperatura agora é de " + temp + " graus, a temperatura máxima será de " + tempMax + " graus e a mínima é de " + tempMin + " graus."
+	log.Println(p)
+	voice.Start(p)
 }
 
 func prev(apiKey string) {
@@ -62,6 +64,7 @@ func prev(apiKey string) {
 	var tpl bytes.Buffer
 	tmpl.Execute(&tpl, data)
 
+	log.Println(tpl.String())
 	voice.Start(tpl.String())
 
 }
