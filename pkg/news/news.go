@@ -165,7 +165,7 @@ func canalmeio() {
 				altered := myRegex.ReplaceAllString(data, "")
 				if len(altered) > 0 {
 					w, err := f.WriteString(data)
-					fmt.Println("escrevendo:", data)
+					log.Println("got:", data)
 					if err != nil {
 						log.Println(w, err)
 						break

@@ -4,10 +4,12 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"regexp"
 )
 
 func Start(s string) {
-	cmda := exec.Command("gtts-cli", "-l", "pt", `--nocheck`, `-o`, "/tmp/.hall9000.mp3", `"`+s+`"`)
+	d := clear(s)
+	cmda := exec.Command("gtts-cli", "-l", "pt", `--nocheck`, `-o`, "/tmp/.hall9000.mp3", `"`+d+`"`)
 	cmda.Stdout = os.Stdout
 	cmda.Stderr = os.Stderr
 	err := cmda.Run()
@@ -25,4 +27,9 @@ func Start(s string) {
 		log.Println(err)
 	}
 
+}
+
+func clear(s string) string {
+	myRegex, _ := regexp.Compile(`(")`)
+	return myRegex.ReplaceAllString(s, "")
 }
