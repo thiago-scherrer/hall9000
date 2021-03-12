@@ -61,9 +61,9 @@ func Start() {
 				go weather.Start()
 			case "canal":
 				go tv.Canal(update.Message.CommandArguments())
-			case "tv+":
+			case "tvi":
 				go tv.Tvi()
-			case "tv-":
+			case "tvd":
 				go tv.Tvd()
 			default:
 				msg.Text = `Comandos validos: 
@@ -72,8 +72,8 @@ func Start() {
 				/volume 
 				/clima 
 				/canal (1..500) 
-				/tv+
-				/tv-
+				/tvi
+				/tvd
 				`
 			}
 			bot.Send(msg)
