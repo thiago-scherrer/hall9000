@@ -8,16 +8,61 @@ import (
 	"github.com/thiago-scherrer/hall9000/internal/config"
 )
 
-func Jornal() {
+func Canal(s string) {
+	closeAll()
+	canalgo(s)
+}
+
+func Tvi() {
 	var cmd *exec.Cmd
 	tv := config.GetTvIp()
 
-	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_5")
-
+	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_VOLUP")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
 		log.Println(err)
 	}
+}
+
+func Tvd() {
+	var cmd *exec.Cmd
+	tv := config.GetTvIp()
+
+	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_VOLDOWN")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		log.Println(err)
+	}
+}
+
+func closeAll() {
+	var cmd *exec.Cmd
+	tv := config.GetTvIp()
+
+	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_DTV")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		log.Println(err)
+	}
+
+}
+
+func canalgo(s string) {
+	var cmd *exec.Cmd
+	tv := config.GetTvIp()
+
+	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", s)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
+	if err != nil {
+		log.Println(err)
+	}
+
 }

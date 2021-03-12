@@ -39,13 +39,11 @@ func Start() {
 		}
 
 		u := update.Message.From.UserName
-
 		if reflect.DeepEqual(u, "thiago42") {
-			continue
-		} else if reflect.DeepEqual(u, "karinaspd") {
-			continue
-		} else {
 			log.Println(u)
+		} else if reflect.DeepEqual(u, "karinaspd") {
+			log.Println(u)
+		} else {
 			break
 		}
 
@@ -61,10 +59,14 @@ func Start() {
 				go volume.Start(update.Message.CommandArguments())
 			case "clima":
 				go weather.Start()
-			case "jornal":
-				go tv.Jornal()
+			case "canal":
+				go tv.Canal(update.Message.CommandArguments())
+			case "tv+":
+				go tv.Tvi()
+			case "tv-":
+				go tv.Tvd()
 			default:
-				msg.Text = "Comandos validos: /news /stop /volume /clima"
+				msg.Text = "Comandos validos: /news /stop /volume /clima /jornal"
 			}
 			bot.Send(msg)
 		}
