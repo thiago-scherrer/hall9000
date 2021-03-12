@@ -66,7 +66,15 @@ func Start() {
 			case "tv-":
 				go tv.Tvd()
 			default:
-				msg.Text = "Comandos validos: /news /stop /volume /clima /jornal"
+				msg.Text = `Comandos validos: 
+				/news 
+				/stop 
+				/volume 
+				/clima 
+				/canal (1..500) 
+				/tv+
+				/tv-
+				`
 			}
 			bot.Send(msg)
 		}

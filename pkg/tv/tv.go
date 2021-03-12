@@ -16,26 +16,30 @@ func Canal(s string) {
 func Tvi() {
 	var cmd *exec.Cmd
 	tv := config.GetTvIp()
-
-	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_VOLUP")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err != nil {
-		log.Println(err)
+	i := 1
+	for i <= 6 {
+		cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_VOLUP")
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		err := cmd.Run()
+		if err != nil {
+			log.Println(err)
+		}
 	}
 }
 
 func Tvd() {
 	var cmd *exec.Cmd
 	tv := config.GetTvIp()
-
-	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_VOLDOWN")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-	err := cmd.Run()
-	if err != nil {
-		log.Println(err)
+	i := 1
+	for i <= 6 {
+		cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_VOLDOWN")
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		err := cmd.Run()
+		if err != nil {
+			log.Println(err)
+		}
 	}
 }
 
