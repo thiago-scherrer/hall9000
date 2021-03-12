@@ -37,6 +37,11 @@ func GetClimaKey() string {
 	return k
 }
 
+func GetTvIp() string {
+	k := os.Getenv("TVIP")
+	return k
+}
+
 func GetControl() bool {
 	control := os.Getenv("CONTROL")
 
