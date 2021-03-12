@@ -12,7 +12,7 @@ func Jornal() {
 	var cmd *exec.Cmd
 	tv := config.GetTvIp()
 
-	cmd = exec.Command("amsungctl", "--host", tv, "--id", "42", "KEY_5")
+	cmd = exec.Command("samsungctl", "--host", tv, "--id", "42", "KEY_5")
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
