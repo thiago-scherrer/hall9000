@@ -67,13 +67,13 @@ func Start() {
 				go tv.Tvd()
 			default:
 				msg.Text = `Comandos validos: 
-				/news 
-				/stop 
-				/volume 
-				/clima 
-				/canal (1..500) 
-				/tvi
-				/tvd
+				/news (brasil, tec, meio, geral)
+				/stop
+				/volume (+/-)
+				/clima
+				/canal (1..500)
+				/tvi (aumentar volume)
+				/tvd (diminuir volume)
 				`
 			}
 			bot.Send(msg)
