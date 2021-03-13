@@ -37,10 +37,9 @@ func temp(apiKey string) {
 	w.CurrentByID(3458611)
 
 	temp := fmt.Sprintf("%.2f", w.Main.Temp)
-	tempMax := fmt.Sprintf("%.2f", w.Main.TempMax)
-	tempMin := fmt.Sprintf("%.2f", w.Main.TempMin)
+	humidity := string(w.Main.Humidity)
 
-	p := "A temperatura agora é de " + temp + " graus, a temperatura máxima será de " + tempMax + " graus e a mínima é de " + tempMin + " graus."
+	p := "A temperatura agora é de " + temp + " graus. A umidade é de " + humidity
 	log.Println(p)
 	voice.Start(p)
 }
